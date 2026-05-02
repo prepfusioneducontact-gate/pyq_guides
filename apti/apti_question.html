@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrepFusion Intern Docs: Year & Session Setup</title>
+    <style>
+        :root {
+            --primary: #B45309; /* GAAccent from LaTeX */
+            --dark: #111827;
+            --bg: #F8FAFC;
+            --border: #E2E8F0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+        }
+        h1, h2, h3 { color: var(--dark); }
+        h1 { border-bottom: 3px solid var(--primary); padding-bottom: 10px; }
+        h2 { margin-top: 2em; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+        .highlight { color: var(--primary); font-weight: bold; }
+        pre {
+            background-color: var(--bg);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+        code {
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            background-color: var(--bg);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 0.9em;
+            color: #d63384;
+        }
+        pre code { background-color: transparent; padding: 0; color: inherit; }
+        .note {
+            background-color: #FFFBEB;
+            border-left: 4px solid #F59E0B;
+            padding: 10px 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        th { background-color: var(--bg); color: var(--dark); }
+    </style>
+</head>
+<body>
+
+    <h1>PrepFusion LaTeX Guide: Adding Years & Sessions in Questions Template</h1>
+    <p>This documentation explains how to structure the main file for the <strong>General Aptitude PYQ Book</strong>. Follow these instructions when adding a new year of Previous Year Questions (PYQs) to the project.</p>
+
+    <h2>1. The Basic Template</h2>
+    <p>To add a new year (e.g., 2025), copy and paste the following block into your <code>main.tex</code> file inside the <code>\mainmatter</code> section. Update the values as needed.</p>
+
+<pre><code>% Example Year 2025
+\BeginYear{2025}{2 Sessions\quad·\quad20 Questions}{
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabularx}{\textwidth}{l X c}
+    \rowcolor{SoftGray} \textbf{Session} & \textbf{Participating Branches} & \textbf{Total Qs} \\ \midrule
+    Session 1 & EC, EE, IN, CS, ME, CE & 10 \\
+    Session 2 & XE, BT, CH, PI, TF & 10 \\ \bottomrule
+  \end{tabularx}
+}
+  % \YearSession now takes 4 parameters: {Folder}{Name}{Time}{Date}
+  \YearSession{2025/Session1}{Session : 1}{Forenoon}{10/02/25}
+  \YearSession{2025/Session2}{Session : 2}{Afternoon}{11/02/25}
+\EndYear</code></pre>
+
+    <h2>2. Command Breakdown</h2>
+
+    <h3><code>\BeginYear{Param 1}{Param 2}{Param 3}</code></h3>
+    <p>This command creates the large title page for the Year and sets up the Summary Table.</p>
+    <table>
+        <tr>
+            <th>Parameter</th>
+            <th>What it is</th>
+            <th>Example</th>
+        </tr>
+        <tr>
+            <td><strong>Param 1</strong></td>
+            <td>The Year (must be 4 digits)</td>
+            <td><code>2025</code></td>
+        </tr>
+        <tr>
+            <td><strong>Param 2</strong></td>
+            <td>Subtitle / Stats string</td>
+            <td><code>2 Sessions\quad·\quad20 Questions</code></td>
+        </tr>
+        <tr>
+            <td><strong>Param 3</strong></td>
+            <td>The Summary Table Code</td>
+            <td>The entire <code>\begin{tabularx}...\end{tabularx}</code> block. Update the rows inside to match the actual sessions and branches for that year.</td>
+        </tr>
+    </table>
+
+    <h3><code>\YearSession{Param 1}{Param 2}{Param 3}{Param 4}</code></h3>
+    <p>This command creates the visual banner for the session and <strong>automatically imports the questions</strong> for that session.</p>
+    <table>
+        <tr>
+            <th>Parameter</th>
+            <th>What it is</th>
+            <th>Example</th>
+        </tr>
+        <tr>
+            <td><strong>Param 1</strong></td>
+            <td>The Folder Path</td>
+            <td><code>2025/Session1</code></td>
+        </tr>
+        <tr>
+            <td><strong>Param 2</strong></td>
+            <td>Session Display Name</td>
+            <td><code>Session : 1</code></td>
+        </tr>
+        <tr>
+            <td><strong>Param 3</strong></td>
+            <td>Time/Shift</td>
+            <td><code>Forenoon</code> or <code>Afternoon</code></td>
+        </tr>
+        <tr>
+            <td><strong>Param 4</strong></td>
+            <td>Date of the Exam</td>
+            <td><code>10/02/25</code></td>
+        </tr>
+    </table>
+
+    <div class="note">
+        <strong>⚠️ CRITICAL FOLDER STRUCTURE REQUIREMENT:</strong><br>
+        Because of how <code>\YearSession</code> is programmed, whatever folder path you put in <strong>Param 1</strong> MUST contain a file named <code>common.tex</code>. <br><br>
+        For example, if you write <code>\YearSession{2025/Session1}{...}</code>, the LaTeX compiler will look for a file exactly at: <code>2025/Session1/common.tex</code>. All your MCQ/NAT/MSQ questions for this session must go inside that <code>common.tex</code> file!
+    </div>
+
+    <h3><code>\EndYear</code></h3>
+    <p>You <strong>must</strong> place this at the very end of your year block. It does two critical things:</p>
+    <ul>
+        <li>Closes out the year chapter formatting.</li>
+        <li><strong>Automatically generates and prints the Answer Key</strong> for all the sessions you just listed. If you forget this, the answer key won't print!</li>
+    </ul>
+
+    <h2>3. Working with Images</h2>
+    <p>When you use the <code>\QuestionFigure{filename}</code> command inside your <code>common.tex</code> files, the system will automatically look for images in an <code>img/</code> folder inside the current session folder.</p>
+    <p><strong>Example:</strong> If you are working in <code>2025/Session1/common.tex</code>, the command <code>\QuestionFigure{q1.png}</code> will look for the image at <code>2025/Session1/img/q1.png</code>.</p>
+
+</body>
+</html>
