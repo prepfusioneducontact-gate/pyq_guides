@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intern Guide: Adding Exam Sessions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --secondary: #0ea5e9;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --code-bg: #1e1e1e;
+            --code-text: #d4d4d4;
+            --highlight: #ecfdf5;
+            --highlight-border: #10b981;
+            --accent: #f43f5e;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        h2 {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        h2 .step-number {
+            background: var(--primary);
+            color: white;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 0.9rem;
+            margin-right: 12px;
+        }
+
+        p {
+            margin: 10px 0 20px 0;
+        }
+
+        pre {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            background: #f1f5f9;
+            padding: 2px 5px;
+            border-radius: 4px;
+            color: var(--accent);
+            font-size: 0.9em;
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: inherit;
+        }
+
+        .diff-add {
+            background-color: #065f46;
+            display: block;
+            margin: 0 -20px;
+            padding: 0 20px;
+            border-left: 4px solid var(--highlight-border);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .badge-info { background: #e0f2fe; color: #0369a1; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+        }
+
+        .qid-box {
+            background: var(--highlight);
+            border: 1px solid var(--highlight-border);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Adding New Years and Sessions</h1>
+        <p class="subtitle">Aptitude Solution Template</p>
+    </header>
+
+    <!-- STEP 1 -->
+    <div class="card">
+        <h2><span class="step-number">1</span> Update Year Summary</h2>
+        <p>Locate the <code>\BeginYear</code> block for your target year. You need to update the session count in the header and add a row to the branch table.</p>
+        
+        <div class="badge badge-info">File: main_s_aptitude.tex</div>
+        <pre><code>\BeginYear{2011}{<span style="color: #fbbf24;">2 Sessions</span>\quad·\quad Solutions}{%
+  \renewcommand{\arraystretch}{1.5}
+  \begin{tabularx}{\textwidth}{l X}
+    \rowcolor{SoftGray}\textbf{Session} & \textbf{Participating Branches}\\\midrule
+    Session 1 & All Branches \\
+<span class="diff-add">    Session 2 & All Branches \\</span>
+  \bottomrule
+  \end{tabularx}
+}</code></pre>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="card">
+        <h2><span class="step-number">2</span> Add Sessions in a Year</h2>
+        <p>Insert the <code>\YearSolSession</code> macro. This registers the session folder and tells the system where to look for the <code>sol.tex</code> file.</p>
+        
+        <pre><code>  \YearSolSession{2011/Session1}{Session : 1}{Forenoon}{05/02/11}
+<span class="diff-add">  \YearSolSession{2011/Session2}{Session : 2}{Afternoon}{06/02/11}</span>
+\EndYear</code></pre>
+
+        <h3>Parameter Reference</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Argument</th>
+                    <th>Example</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>{folder}</code></td>
+                    <td>2011/Session2</td>
+                    <td>Path to the folder containing <code>sol.tex</code> and <code>img/</code></td>
+                </tr>
+                <tr>
+                    <td><code>{label}</code></td>
+                    <td>Session : 2</td>
+                    <td>The text displayed in the header divider.</td>
+                </tr>
+                <tr>
+                    <td><code>{slot}</code></td>
+                    <td>Afternoon</td>
+                    <td>Time slot (Forenoon/Afternoon/Combined).</td>
+                </tr>
+                <tr>
+                    <td><code>{date}</code></td>
+                    <td>06/02/11</td>
+                    <td>The specific date or year for that session.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="card">
+        <h2><span class="step-number">3</span> Folder Structure & sol.tex</h2>
+        <p>You must create the physical directory on your computer so the images and solutions have a home.</p>
+        
+        <div class="badge badge-info">Terminal / File Explorer</div>
+        <pre><code># Create the directory and image subfolder
+ 2011/Session2/img</code></pre>
+
+        <p>Then, create a new file at <code>2011/Session2/sol.tex</code> using this template:</p>
+        <pre><code>% ============================================================
+%  2011/Session2/sol.tex
+% ============================================================
+
+\MCQSol{2011}{1}{1}{A}{Easy}{https://video.link}{%
+  Explanation for Question 1 goes here...
+}</code></pre>
+    </div>
+
+    <!-- QID LOGIC -->
+    <div class="card qid-box">
+        <h2 style="color: #065f46;">Auto-QID Logic</h2>
+        <p>The system generates IDs automatically based on your structure. For <strong>2011, Session 2, Question 5</strong>, the QID will be:</p>
+        <div style="font-size: 2rem; font-weight: 800; color: #065f46; text-align: center; margin: 10px 0;">
+            Q11.2.5
+        </div>
+        <ul>
+            <li><strong>11:</strong> Taken from the last two digits of <code>\BeginYear{2011}</code></li>
+            <li><strong>2:</strong> Taken from the session sequence (the 2nd <code>\YearSolSession</code> call)</li>
+            <li><strong>5:</strong> Taken from your <code>\MCQSol</code> argument.</li>
+        </ul>
+    </div>
+
+    <footer>
+        &copy; 2026 PrepFusion Content Engineering Team
+    </footer>
+</div>
+
+</body>
+</html>
