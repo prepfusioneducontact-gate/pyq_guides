@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intern Guide: Chapters & Branches</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00008b;
+            --secondary: #059669;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --code-bg: #1e1e1e;
+            --code-text: #d4d4d4;
+            --highlight: #f0f4ff;
+            --highlight-border: #00008b;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        header {
+            border-left: 8px solid var(--primary);
+            padding: 20px;
+            background: white;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        h1 { font-weight: 700; font-size: 2.2rem; margin: 0; color: var(--primary); }
+        .subtitle { color: var(--text-muted); margin-top: 5px; }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid #e2e8f0;
+        }
+
+        h2 { color: var(--primary); font-size: 1.4rem; margin-top: 0; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
+        
+        pre {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
+
+        .folder-tree {
+            font-family: 'Fira Code', monospace;
+            background: #2d3436;
+            color: #dfe6e9;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .branch-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 5px;
+            color: white;
+        }
+
+        .ec { background: #00008b; }
+        .ee { background: #059669; }
+        .in { background: #7C3AED; }
+
+        .tip {
+            background: #fff9db;
+            border-left: 4px solid #fcc419;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Mathematics Content Guide</h1>
+        <p class="subtitle">Managing Chapters and Branch-wise Question Banks</p>
+    </header>
+
+    <!-- SECTION 1: CHAPTER NAMES -->
+    <div class="card">
+        <h2>1. Changing Chapter Information</h2>
+        <p>All chapter metadata is controlled by the <code>\ChapterWithBranches</code> command in your main <code>.tex</code> file.</p>
+        
+        <pre><code>\ChapterWithBranches{folder_path}{Subject}{Chapter Name}{Syllabus Items}</code></pre>
+
+        <p><strong>Example Change:</strong></p>
+        <pre><code>% Change from "Linear Algebra" to "Advanced Matrices"
+\ChapterWithBranches{chapters/ch1_linear_algebra}
+  {Engineering Mathematics}
+  {Advanced Matrices} % <-- Edit this line
+  {\begin{enumerate}
+    \item Eigenvalues and Eigenvectors
+    \item Cayley-Hamilton Theorem
+  \end{enumerate}}</code></pre>
+    </div>
+
+    <!-- SECTION 2: FILE STRUCTURE -->
+    <div class="card">
+        <h2>2. Folder Structure for Branch Questions</h2>
+        <p>The system automatically looks for specific <code>.tex</code> files inside the chapter folder based on the <code>\SelectedBranches</code> list.</p>
+        
+        <div class="folder-tree">
+            📁 chapters/ch1_linear_algebra/<br>
+            ├── 📄 common.tex&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #81ecec;"># Shared content for all branches</span><br>
+            ├── 📄 EC.tex&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #81ecec;"># Questions for ECE branch</span><br>
+            ├── 📄 EE.tex&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #81ecec;"># Questions for Electrical branch</span><br>
+            └── 📁 img/<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;└── 📁 EC/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #81ecec;"># Images used in EC.tex</span>
+        </div>
+    </div>
+
+    <!-- SECTION 3: ADDING QUESTIONS -->
+    <div class="card">
+        <h2>3. Adding Branch-wise Questions</h2>
+        <p>To add questions for a specific branch (e.g., ME), create <code>ME.tex</code> in the chapter folder and use the standard question macros.</p>
+        
+        <pre><code>% Inside chapters/ch1_linear_algebra/ME.tex
+
+\MCQ{Unique_ID}{Year}{Session}{Marks}{Question Body}{Correct_Ans}{
+  Explanation text...
+}
+
+% For images, the system automatically looks in: 
+% img/[BRANCH_CODE]/filename
+\QuestionFigure[0.8\columnwidth]{matrix_diagram.png}</code></pre>
+
+        <div class="tip">
+            <strong>Pro Tip:</strong> The <code>Unique_ID</code> is mapped to the <strong>Answer Key</strong> automatically. Ensure it follows the numbering sequence of that branch.
+        </div>
+    </div>
+
+    <!-- SECTION 4: BRANCH CONFIG -->
+    <div class="card">
+        <h2>4. Configuring Active Branches [NEVER TOUCH UNLESS REQUIRED]</h2>
+        <p>If you need to add a brand new branch to the book, update these two variables in the preamble<b>[Take Permission from Admin Before Changing this]</b>:</p>
+        
+        <pre><code>% 1. Add the code to the list
+\newcommand{\SelectedBranches}{EC,EE,IN,CS,ME,CE,CH,PI,NEW_BRANCH}
+
+% 2. Add the Full Name mapping in \GetFullBranchName
+\ifnum\pdfstrcmp{#1}{NEW_BRANCH}=0 8 \else ...
+NEW_BRANCH Engineering\or % 8</code></pre>
+    </div>
+
+    <footer style="text-align: center; color: var(--text-muted); padding: 20px;">
+        PrepFusion Engineering Mathematics Template v2.0
+    </footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maths Solutions Guide | PrepFusion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00008b;
+            --accent: #7C3AED;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --code-bg: #1e1e1e;
+            --code-text: #d4d4d4;
+        }
+
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text-main); line-height: 1.6; margin: 0; padding: 0; }
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        
+        header { 
+            background: linear-gradient(135deg, var(--primary) 0%, #000040 100%); 
+            color: white; padding: 40px; border-radius: 12px; margin-bottom: 30px;
+        }
+
+        .card { background: var(--card-bg); border-radius: 12px; padding: 25px; margin-bottom: 25px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        h2 { color: var(--primary); margin-top: 0; display: flex; align-items: center; }
+        h2::before { content: "•"; color: var(--accent); margin-right: 10px; font-size: 1.5rem; }
+
+        pre { background: var(--code-bg); color: var(--code-text); padding: 15px; border-radius: 8px; overflow-x: auto; font-family: 'Fira Code', monospace; font-size: 0.9rem; }
+        code { font-family: 'Fira Code', monospace; color: #ffffff; padding: 2px 4px; border-radius: 4px; }
+        
+        .math-badge { background: #eff6ff; color: #1d4ed8; padding: 4px 12px; border-radius: 99px; font-size: 0.8rem; font-weight: 600; display: inline-block; margin-bottom: 10px; }
+        
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9rem; }
+        th { text-align: left; background: #f1f5f9; padding: 10px; border-bottom: 2px solid #cbd5e1; }
+        td { padding: 10px; border-bottom: 1px solid #e2e8f0; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Engineering Mathematics</h1>
+        <p>Authoring & Maintenance Guide for Solution Series</p>
+    </header>
+
+    <!-- SECTION 1: METADATA -->
+    <div class="card">
+        <h2>1. Global Book Metadata</h2>
+        <p>To switch the project from "Network Theory" to "Engineering Mathematics," update the metadata block in <code>main.tex</code>.</p>
+        <pre><code>% Locate these commands in main.tex
+\newcommand{\BookTitle}{Engineering Mathematics}
+\newcommand{\BookSubtitle}{Detailed Solutions — Topic Wise}
+\newcommand{\WebsiteText}{www.PrepFusion.in}</code></pre>
+    </div>
+
+    <!-- SECTION 2: ADDING MATH CHAPTERS -->
+    <div class="card">
+        <h2>2. Managing Math Chapters</h2>
+        <p>Use <code>\ChapterSolutionsWithBranches</code> to link a new topic (e.g., Linear Algebra). Ensure the chapter folder matches the path provided.</p>
+        <pre><code>\ChapterSolutionsWithBranches{chapters/ch1_linear_algebra}
+  {Engineering Mathematics}  % Subject Name
+  {Linear Algebra}           % Chapter Name
+  {\begin{enumerate}         % Syllabus List
+    \item Determinants and Matrices
+    \item Systems of Linear Equations
+    \item Eigenvalues and Eigenvectors
+  \end{enumerate}}</code></pre>
+    </div>
+
+    <!-- SECTION 3: WRITING MATH SOLUTIONS
+    <div class="card">
+        <div class="math-badge">Core Macro: \Solution</div>
+        <h2>3. Authoring Solutions</h2>
+        <p>For Maths, depth is key. Use the specific wrappers (<code>\MCQSol</code>, <code>\MSQSol</code>, <code>\NATSol</code>) which require 8 arguments.</p>
+        
+        <table>
+            <thead>
+                <tr><th>Arg #</th><th>Parameter</th><th>Example</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>Chapter Index</td><td>1 (for Ch 1)</td></tr>
+                <tr><td>2</td><td>Year</td><td>2024</td></tr>
+                <tr><td>3</td><td>Question No.</td><td>15</td></tr>
+                <tr><td>4</td><td>Marks</td><td>2</td></tr>
+                <tr><td>5</td><td>Final Answer</td><td>-5</td></tr>
+                <tr><td>6</td><td>Difficulty</td><td>1 (Easy) to 3 (Hard)</td></tr>
+                <tr><td>7</td><td>Video URL</td><td>YouTube Link (or leave empty)</td></tr>
+                <tr><td>8</td><td>Solution Body</td><td>The LaTeX explanation</td></tr>
+            </tbody>
+        </table>
+
+        <pre><code>\MCQSol{1}{2024}{15}{2}{B}{2}{https://video.link}{
+  To find the rank of the matrix $A$...
+  \[ \rho(A) = 3 \]
+}</code></pre>
+    </div> -->
+
+    <!-- SECTION 4: MATH EXPLANATION TOOLS
+    <div class="card">
+        <h2>4. Advanced Explanation Blocks</h2>
+        <p>Maths solutions often require alternative methods or warnings about common errors. Use these built-in environments.</p>
+        
+        <p><strong>Alternative Methods:</strong> Use <code>\Method{N}{Content}</code> to show different approaches[cite: 3].</p>
+        <pre><code>\Method{2}{Using the properties of determinants...}</code></pre>
+
+        <p><strong>Key Concept Boxes:</strong> Use <code>\KeyPoints{...}</code> for important theorems or formulas[cite: 3].</p>
+        
+        <p><strong>Warning Boxes:</strong> Use <code>\MistakesToAvoid{...}</code> to highlight where students often trip up in calculations[cite: 3].</p>
+    </div> -->
+
+    <!-- SECTION 5: FILE SYSTEM -->
+    <div class="card">
+        <h2>3. Directory Requirements</h2>
+        <p>The system iterates through <code>\SelectedBranches</code> and looks for files with the <code>sol_</code> prefix inside your chapter folder[cite: 3].</p>
+        <pre><code>📁 chapters/ch1_linear_algebra/
+├── 📄 common.tex     (Contains \ChapterDivider)
+├── 📄 sol_EC.tex     (Maths solutions for ECE)
+├── 📄 sol_EE.tex     (Maths solutions for EE)
+└── 📁 img/           (Chapter diagrams)</code></pre>
+    </div>
+
+    <footer style="text-align: center; color: var(--text-main); font-size: 0.8rem; padding: 20px;">
+        &copy; 2026 PrepFusion Content Engineering — Referenced from main.tex
+    </footer>
+</div>
+
+</body>
+</html>
